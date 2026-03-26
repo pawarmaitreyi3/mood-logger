@@ -1,7 +1,7 @@
 // Mood Logger App - JavaScript
 
 // Google Sheets Web App URL
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbznZx6TOK1WTLkvk2IuP3oFZTEgErcN9S8ya_5fZdtPN6wNZvm7Ty24wmtCM39PPdGy/exec';
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxJlX7fqmcd1SukL-Mh1CYRTna9Ef9ZzAAwgfAO8VpNOySQTAW57tbHMuuZRCAIb9o2/exec';
 
 // State to track current selections
 let selectedMood = null;
