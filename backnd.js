@@ -1,5 +1,8 @@
 // Mood Logger App - JavaScript
 
+// Google Sheets Web App URL
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbznZx6TOK1WTLkvk2IuP3oFZTEgErcN9S8ya_5fZdtPN6wNZvm7Ty24wmtCM39PPdGy/exec';
+
 // State to track current selections
 let selectedMood = null;
 let selectedTriggers = [];
@@ -273,6 +276,9 @@ function setupLogButton() {
         // Save to local storage
         saveMoodEntry(moodEntry);
 
+        // Send to Google Sheets
+        sendToGoogleSheets(moodEntry);
+
         // Show success message
         showSuccessMessage();
 
@@ -289,6 +295,33 @@ function saveMoodEntry(entry) {
     moodHistory.push(entry);
     localStorage.setItem('moodHistory', JSON.stringify(moodHistory));
     console.log('Mood logged:', entry);
+}
+
+// Send mood entry to Google Sheets
+function sendToGoogleSheets(entry) {
+    const data = {
+        date: new Date(entry.date).toLocaleDateString(),
+        time: new Date(entry.date).toLocaleTimeString(),
+        mood: entry.mood,
+        intensity: entry.intensity,
+        triggers: entry.triggers.join(', '),
+        note: entry.note
+    };
+
+    fetch(GOOGLE_SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(() => {
+        console.log('Data sent to Google Sheets');
+    })
+    .catch(error => {
+        console.error('Error sending to Google Sheets:', error);
+    });
 }
 
 // Get mood history from local storage
